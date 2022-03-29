@@ -1,62 +1,48 @@
+l=[]
+l1=[]
+d=[]
+d1=[]
 def solution(A):
-    stack=[]
-    #count=0
-    count1=0
-    if len(A)%2!=0:
-        l=A.copy()
-        for i in range(len(l)):
-            k=l.pop(i)
-            l1=l.copy()
-            #print(l1)
-            l.insert(i,k)
-            stack.append(l1)
-        for ele in stack:
-            count=0
-            if len(ele)%2==0:
-                l2=ele.copy()
-                #print(l2)
-                for i in range(1,len(ele)):
-                    if i%2!=0:
-                        if ele[i]<ele[i-1]:
-                            break
-                        else:
-                            count+=1
-                    elif i%2==0:
-                        if ele[i]>ele[i-1]:
-                            break
-                        else:
-                            count+=1
-            #print(count)
-            if count==len(ele)-1:
-                count1+=1
-            elif count==0:
-                count1=-1
-        if count1==1:
-            count1=0
-        print(count1)
-
-    elif len(A)%2==0:
-        ele=A.copy()
-        count2=0
-        for i in range(1,len(ele)):
-            if i%2!=0:
-                if ele[i]<ele[i-1]:
-                    break
-                else:
-                    count2+=1
-            elif i%2==0:
-                if ele[i]>ele[i-1]:
-                    break
-                else:
-                    count2+=1
-        if count2==len(ele)-1:
-            count1+=1
+    for i in range(1,len(A)):
+        if i==1:
+            if A[i]<A[i-1]:
+                l.extend([A[i-1],A[i]])
+                d.extend([A[i-1],A[i]])
+            elif A[i]>A[i-1] or A[i]==A[i-1]:
+                l1.extend([A[i-1],A[i]])
+                d1.extend([A[i-1], A[i]])
+            #print(l)
         else:
-            count1=-1
+            #print(A[i])
+            if len(l)!=0:
+                if (A[i]>d[-1] and d[-1]<d[-2]) or (A[i]<d[-1] and d[-1]>d[-2]):
+                    l.append(A[i])
+                    d.append(A[i])
+                elif (A[i]>d[-1] and d[-1]>d[-2]) or (A[i]<d[-1] and d[-1]<d[-2]):
+                    d.append(A[i])
+            if len(l1)!=0:
+                if (A[i]>d1[-1] and d1[-1]<d1[-2]) or (A[i]<d1[-1] and d1[-1]>d1[-2]):
+                    l1.append(A[i])
+                    d1.append(A[i])
+                elif (A[i]>d1[-1] and d1[-1]>d1[-2]) or (A[i]<d1[-1] and d1[-1]<d1[-2]):
+                    d1.append(A[i])
+                elif (A[i] == d1[-1] and d1[-1] < d1[-2]) or (A[i] == d1[-1] and d1[-1] > d1[-2]) or (A[i] == d1[-1] and d1[-1] == d1[-2]):
+                    d1.append(A[i])
+                elif (A[i] > d1[-1] and d1[-1] == d1[-2]) or (A[i] < d1[-1] and d1[-1] == d1[-2]):
+                    d1.append(A[i])
+                    l1.append(A[i])
+                    l1.pop(1)
 
-        if count1==1:
-            count1=0
-        print(count1)
+    if len(l)!=0:
+        print(len(d)-len(l))
+    elif len(l1) != 0:
+        print(len(d1)-len(l1))
 
+solution(A5)
 
-a=solution([1,3,1,2])
+A=[5,3,5,7,5]
+A1=[5,2,6,4,7,3]
+A2=[2,5,4,6,3,7]
+A3=[1,3,1,2]
+A4=[5,5,3,4,5]
+A5=[5,5,6,4,5]
